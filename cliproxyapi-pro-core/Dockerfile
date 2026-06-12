@@ -55,6 +55,14 @@ RUN apk add --no-cache ca-certificates curl tzdata
 
 WORKDIR /CLIProxyAPI
 
+# 下载最新的 Pro 管理面板（在构建时预置）
+ARG MANAGEMENT_REPO=plgg-LK/CLIProxyAPI-Pro
+RUN set -eux; \
+    LATEST_TAG=$(curl -fsSL "https://api.github.com/repos/${MANAGEMENT_REPO}/releases/latest" | jq -r '.tag_name'); \
+    echo "Downloading management.html version: ${LATEST_TAG}"; \
+    curl -fsSL "https://github.com/${MANAGEMENT_REPO}/releases/download/${LATEST_TAG}/management.html" \
+      -o /CLIProxyAPI/management.html || echo "Warning: Failed to download management.html"
+
 COPY --from=builder /out/CLIProxyAPI /CLIProxyAPI/CLIProxyAPI
 COPY --from=builder /src/CLIProxyAPI/config.example.yaml /CLIProxyAPI/config.example.yaml
 COPY entrypoint.sh /CLIProxyAPI/entrypoint.sh
