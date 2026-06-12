@@ -23,7 +23,7 @@ usage-statistics-enabled: true
 
 # 远程管理面板仓库（Pro 版本）
 remote-management:
-  panel-github-repository: https://github.com/ssfun/CLIProxyAPI-Pro
+  panel-github-repository: https://github.com/plgg-LK/CLIProxyAPI-Pro
   auto-update: true
 
 # 日志配置
