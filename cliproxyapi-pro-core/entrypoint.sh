@@ -8,6 +8,36 @@ log() {
 }
 
 # ==========================================
+# 0. 检查并创建配置文件
+# ==========================================
+if [ ! -f /CLIProxyAPI/config.yaml ]; then
+    log "ConfigInit" "INFO" "Config file not found, creating default config.yaml..."
+    cat > /CLIProxyAPI/config.yaml << 'EOF'
+# CLIProxyAPI-Pro 配置文件
+server:
+  port: 8317
+  host: 0.0.0.0
+
+# Usage statistics 必须启用（Pro 版本需要）
+usage-statistics-enabled: true
+
+# 远程管理面板仓库（Pro 版本）
+remote-management:
+  panel-github-repository: https://github.com/ssfun/CLIProxyAPI-Pro
+  auto-update: true
+
+# 日志配置
+log:
+  level: info
+
+# 其他配置可以通过管理面板添加
+EOF
+    log "ConfigInit" "INFO" "Default config.yaml created successfully."
+else
+    log "ConfigInit" "INFO" "Config file already exists, skipping creation."
+fi
+
+# ==========================================
 # 环境变量配置
 # ==========================================
 # komari agent 变量
